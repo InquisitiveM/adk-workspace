@@ -6,15 +6,24 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy agent packages
+# Create non-root user for security
+RUN adduser --disabled-password --gecos "" appuser && \
+    chown -R appuser:appuser /app
+
+# Copy application files
+COPY main.py .
 COPY my_first_agent/ ./my_first_agent/
 COPY my_config_agent/ ./my_config_agent/
+
+USER appuser
+
+ENV PATH="/home/appuser/.local/bin:$PATH"
 
 # Cloud Run uses PORT env var (default 8080)
 ENV PORT=8080
 
 EXPOSE ${PORT}
 
-# Run ADK API server in production mode
+# Run FastAPI app with uvicorn (serves both API and web UI)
 # GOOGLE_API_KEY must be provided via environment variables at runtime
-CMD ["sh", "-c", "adk api_server --host 0.0.0.0 --port ${PORT} ."]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port $PORT"]
