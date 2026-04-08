@@ -1,0 +1,29 @@
+# Secrets and environment variables
+.env
+
+# Python virtual environments
+.venv/
+adk-env/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ADK local data
+.adk/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Claude Code local settings
+.claude/settings.local.json
+.claude/launch.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
