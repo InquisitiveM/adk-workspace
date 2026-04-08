@@ -17,4 +17,4 @@ EXPOSE ${PORT}
 
 # Run ADK API server in production mode
 # GOOGLE_API_KEY must be provided via environment variables at runtime
-CMD ["sh", "-c", "adk api_server --port ${PORT} ."]
+CMD ["sh", "-c", "adk api_server --host 0.0.0.0 --port ${PORT} ."]
